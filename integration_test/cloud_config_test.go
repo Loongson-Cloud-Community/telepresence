@@ -52,7 +52,14 @@ func (s *notConnectedSuite) Test_CloudNeverProxy() {
 		timeout *= 5
 	}
 	s.Eventuallyf(func() bool {
-		defer itest.TelepresenceDisconnectOk(ctx)
+		defer func() {
+			stdout, stderr, err := itest.Telepresence(ctx, "quit")
+			dlog.Infof(ctx, "stdout: %q", stdout)
+			dlog.Infof(ctx, "stderr: %q", stderr)
+			if err != nil {
+				dlog.Error(ctx, err)
+			}
+		}()
 		stdout, stderr, err := itest.Telepresence(ctx, "connect", "--namespace", s.AppNamespace(), "--manager-namespace", s.ManagerNamespace())
 		dlog.Infof(ctx, "stdout: %q", stdout)
 		dlog.Infof(ctx, "stderr: %q", stderr)
@@ -92,6 +99,7 @@ func (s *notConnectedSuite) Test_CloudNeverProxy() {
 			return false
 		}
 
+		dlog.Infof(ctx, "Success! Never-proxied IP %s is not reachable", ip)
 		return true
 	}, timeout, 5*time.Second, "never-proxy not updated in %s", timeout)
 }
