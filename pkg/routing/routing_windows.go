@@ -74,13 +74,13 @@ func GetRoutingTable(ctx context.Context) ([]*Route, error) {
 func getRoute(ctx context.Context, routedNet *net.IPNet) (*Route, error) {
 	ip := routedNet.IP
 	pshScript := fmt.Sprintf(`
-$job = Find-NetRoute -RemoteIPAddress "%s" -AsJob | Wait-Job -Timeout 30
+$job = Find-NetRoute -RemoteIPAddress "%s" -AsJob | Wait-Job -Timeout 5
 if ($job.State -ne 'Completed') {
     $errorMessage = $job.ChildJobs[0].JobStateInfo.Reason
     if ($errorMessage -ne $null) {
         $errorMessage = $errorMessage.Message
     } else {
-        $errorMessage = "Unknown error occurred; timed out getting route after 30s."
+        $errorMessage = "Unknown error occurred; timed out getting route after 5s."
     }
     throw "Error getting route: $errorMessage"
 }
