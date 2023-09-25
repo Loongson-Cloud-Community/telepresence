@@ -90,7 +90,7 @@ $obj.NextHop
 $obj.InterfaceIndex[0]
 `, ip)
 	cmd := proc.CommandContext(ctx, "powershell.exe", "-NoProfile", "-NonInteractive", pshScript)
-	cmd.DisableLogging = true
+	cmd.DisableLogging = false
 	stderr := &strings.Builder{}
 	cmd.Stderr = stderr
 	out, err := cmd.Output()
