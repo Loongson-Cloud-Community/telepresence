@@ -25,7 +25,7 @@ func TestEnvconfig(t *testing.T) {
 		"AGENT_INJECT_POLICY":           agentconfig.OnDemand.String(),
 		"AGENT_INJECTOR_NAME":           "agent-injector",
 		"AGENT_PORT":                    "9900",
-		"AGENT_REGISTRY":                "docker.io/datawire",
+		"AGENT_REGISTRY":                "cr.loongnix.cn/library",
 		"AGENT_ARRIVAL_TIMEOUT":         "45s",
 		"CLIENT_CONNECTION_TTL":         (24 * time.Hour).String(),
 		"CLIENT_DNS_EXCLUDE_SUFFIXES":   ".com .io .net .org .ru",
@@ -41,7 +41,7 @@ func TestEnvconfig(t *testing.T) {
 		AgentAppProtocolStrategy: k8sapi.Http2Probe,
 		AgentLogLevel:            "info",
 		AgentPort:                9900,
-		AgentRegistry:            "docker.io/datawire",
+		AgentRegistry:            "cr.loongnix.cn/library",
 		AgentInjectorName:        "agent-injector",
 		AgentArrivalTimeout:      45 * time.Second,
 		ClientConnectionTTL:      24 * time.Hour,
@@ -63,10 +63,10 @@ func TestEnvconfig(t *testing.T) {
 		},
 		"simple": {
 			Input: map[string]string{
-				"AGENT_REGISTRY": "docker.io/datawire",
+				"AGENT_REGISTRY": "cr.loongnix.cn/library",
 			},
 			Output: func(e *managerutil.Env) {
-				e.AgentRegistry = "docker.io/datawire"
+				e.AgentRegistry = "cr.loongnix.cn/library"
 			},
 		},
 		"complex": {

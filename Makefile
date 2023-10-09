@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TELEPRESENCE_REGISTRY ?= docker.io/datawire
+TELEPRESENCE_REGISTRY ?= cr.loongnix.cn/library
 ifdef GITHUB_SHA
   TELEPRESENCE_VERSION ?= v2.14.0-gotest.z$(shell bash -c 'echo $${GITHUB_SHA:0:7}')
 else
@@ -21,8 +21,9 @@ else
   # as it may produce different results every time.
   TELEPRESENCE_VERSION := ${TELEPRESENCE_VERSION}
 endif
-
+TELEPRESENCE_VERSION := v2.15.1
 SHELL:=$(shell which bash)
+
 
 $(if $(filter v2.%,$(TELEPRESENCE_VERSION)),\
   $(info [make] TELEPRESENCE_VERSION=$(TELEPRESENCE_VERSION)),\

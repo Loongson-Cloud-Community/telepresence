@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:alpine as telepresence-build
+FROM cr.loongnix.cn/library/golang:1.19-alpine as telepresence-build
 
-RUN apk add --no-cache gcc musl-dev fuse-dev libcap binutils-gold
+RUN apk add --no-cache gcc musl-dev fuse-dev libcap 
 
 WORKDIR telepresence
 COPY go.mod .
@@ -26,7 +26,7 @@ COPY cmd/authenticator/ cmd/authenticator/
 COPY pkg/ pkg/
 COPY rpc/ rpc/
 COPY charts/ charts/
-COPY build-output/version.txt .
+COPY version.txt .
 
 RUN \
     --mount=type=cache,target=/root/.cache/go-build \
@@ -42,7 +42,7 @@ RUN \
 RUN setcap 'cap_net_bind_service+ep' /usr/local/bin/telepresence
 
 # The telepresence target is the one that gets published. It aims to be a small as possible.
-FROM alpine as telepresence
+FROM cr.loongnix.cn/library/alpine:3.11 as telepresence
 
 RUN apk add --no-cache ca-certificates iptables bash
 

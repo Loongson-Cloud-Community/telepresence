@@ -608,7 +608,7 @@ type Images struct {
 }
 
 const (
-	defaultImagesRegistry = "docker.io/datawire"
+	defaultImagesRegistry = "cr.loongnix.cn/library"
 )
 
 var defaultImages = Images{ //nolint:gochecknoglobals // constant

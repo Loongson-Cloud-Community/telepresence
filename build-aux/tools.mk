@@ -59,10 +59,12 @@ else
 endif
 tools/protoc = $(TOOLSBINDIR)/protoc$(EXE)
 
-PROTOC_ZIP=protoc-$(PROTOC_VERSION)-$(PROTOC_OS_ARCH).zip
+PROTOC_ZIP=protoc-21.9-linux-loongarch64.zip
+#PROTOC_ZIP=protoc-$(PROTOC_VERSION)-$(PROTOC_OS_ARCH).zip
 $(TOOLSDIR)/$(PROTOC_ZIP):
 	mkdir -p $(@D)
-	curl -sfL https://github.com/protocolbuffers/protobuf/releases/download/v$(PROTOC_VERSION)/$(PROTOC_ZIP) -o $@
+	curl -sfL https://github.com/Loongson-Cloud-Community/protobuf/releases/download/v$(PROTOC_VERSION)/$(PROTOC_ZIP) -o $@
+	#curl -sfL https://github.com/protocolbuffers/protobuf/releases/download/v$(PROTOC_VERSION)/$(PROTOC_ZIP) -o $@
 %/bin/protoc$(EXE) %/include %/readme.txt: %/$(PROTOC_ZIP)
 	cd $* && unzip -q -o -DD $(<F)
 
@@ -71,10 +73,12 @@ $(TOOLSDIR)/$(PROTOC_ZIP):
 #
 tools/protolint = $(TOOLSBINDIR)/protolint$(EXE)
 PROTOLINT_VERSION=0.42.0
-PROTOLINT_TGZ=protolint_$(PROTOLINT_VERSION)_$(GOHOSTOS)_$(PROTOLINT_ARCH).tar.gz
+PROTOLINT_TGZ=protolint_0.42.0_linux_loongarch64.tar.gz
+#PROTOLINT_TGZ=protolint_$(PROTOLINT_VERSION)_$(GOHOSTOS)_$(PROTOLINT_ARCH).tar.gz
 $(TOOLSDIR)/$(PROTOLINT_TGZ):
 	mkdir -p $(@D)
-	curl -sfL https://github.com/yoheimuta/protolint/releases/download/v$(PROTOLINT_VERSION)/$(PROTOLINT_TGZ) -o $@
+	curl -sfL https://github.com/Loongson-Cloud-Community/protolint/releases/download/v$(PROTOLINT_VERSION)/$(PROTOLINT_TGZ) -o $@
+	#curl -sfL https://github.com/yoheimuta/protolint/releases/download/v$(PROTOLINT_VERSION)/$(PROTOLINT_TGZ) -o $@
 %/bin/protolint$(EXE) %/bin/protoc-gen-protolint$(EXE): %/$(PROTOLINT_TGZ)
 	mkdir -p $(@D)
 	tar -C $(@D) -zxmf $< protolint$(EXE) protoc-gen-protolint$(EXE)
@@ -89,29 +93,30 @@ $(TOOLSBINDIR)/test-report$(EXE): $(TOOLSSRCDIR)/test-report/*.go $(TOOLSSRCDIR)
 # Shellcheck
 # ==========
 #
-ifneq ($(GOHOSTOS),windows)
-tools/shellcheck = $(TOOLSBINDIR)/shellcheck
-SHELLCHECK_VERSION=0.8.0
-SHELLCHECK_ARCH=$(shell uname -m)
+#ifneq ($(GOHOSTOS),windows)
+#tools/shellcheck = $(TOOLSBINDIR)/shellcheck
+#SHELLCHECK_VERSION=0.8.0
+#SHELLCHECK_ARCH=$(shell uname -m)
 # shellcheck uses the same binary on Intel and Apple Silicon macs
-ifeq ($(GOHOSTOS),darwin)
-SHELLCHECK_ARCH=x86_64
-endif
-SHELLCHECK_TXZ = https://github.com/koalaman/shellcheck/releases/download/v$(SHELLCHECK_VERSION)/shellcheck-v$(SHELLCHECK_VERSION).$(GOHOSTOS).$(SHELLCHECK_ARCH).tar.xz
-$(TOOLSDIR)/$(notdir $(SHELLCHECK_TXZ)):
-	mkdir -p $(@D)
-	curl -sfL $(SHELLCHECK_TXZ) -o $@
-%/bin/shellcheck: %/$(notdir $(SHELLCHECK_TXZ))
-	mkdir -p $(@D)
-	tar -C $(@D) -Jxmf $< --strip-components=1 shellcheck-v$(SHELLCHECK_VERSION)/shellcheck
-endif
+#ifeq ($(GOHOSTOS),darwin)
+#SHELLCHECK_ARCH=x86_64
+#endif
+#SHELLCHECK_TXZ = https://github.com/koalaman/shellcheck/releases/download/v$(SHELLCHECK_VERSION)/shellcheck-v$(SHELLCHECK_VERSION).$(GOHOSTOS).$(SHELLCHECK_ARCH).tar.xz
+#$(TOOLSDIR)/$(notdir $(SHELLCHECK_TXZ)):
+#	mkdir -p $(@D)
+#	curl -sfL $(SHELLCHECK_TXZ) -o $@
+#%/bin/shellcheck: %/$(notdir $(SHELLCHECK_TXZ))
+#	mkdir -p $(@D)
+#	tar -C $(@D) -Jxmf $< --strip-components=1 shellcheck-v$(SHELLCHECK_VERSION)/shellcheck
+#endif
 
 # Helm
 # ====
 #
 tools/helm = $(TOOLSBINDIR)/helm$(EXE)
 HELM_VERSION=$(shell go mod edit -json | jq -r '.Require[] | select (.Path == "helm.sh/helm/v3") | .Version')
-HELM_TGZ = https://get.helm.sh/helm-$(HELM_VERSION)-$(GOHOSTOS)-$(GOHOSTARCH).tar.gz
+HELM_TGZ = https://github.com/Loongson-Cloud-Community/helm/releases/download/v3.12.0/helm-v3.12.0-linux_loongarch64.tar.gz
+#HELM_TGZ = https://get.helm.sh/helm-$(HELM_VERSION)-$(GOHOSTOS)-$(GOHOSTARCH).tar.gz
 $(TOOLSDIR)/$(notdir $(HELM_TGZ)):
 	mkdir -p $(@D)
 	curl -sfL $(HELM_TGZ) -o $@

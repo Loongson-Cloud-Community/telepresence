@@ -15,9 +15,10 @@ replicaCount: 1
 # TELEPRESENCE_REGISTRY environment variable is equal to image.repository.
 #
 # The client will default to docker.io/datawire/tel2:{{CLIENT_VERSION}}
+#The client will default to cr.loongnix.cn/library/tel2:{{CLIENT_VERSION}}
 
 image:
-  registry: docker.io/datawire
+  registry: cr.loongnix.cn/library
   name: tel2
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -158,7 +159,7 @@ agent:
   appProtocolStrategy: http2Probe
   port: 9900
   image:
-    registry: docker.io/datawire
+    registry: cr.loongnix.cn/library
     name:
     tag:
     pullSecrets: []
@@ -265,15 +266,15 @@ hooks:
     #   memory: 128Mi
 
   busybox:
-    registry: docker.io
+    registry: cr.loongnix.cn/library
     image: busybox
-    tag: latest
+    tag: 1.30.1
     imagePullSecrets: []
 
   curl:
-    registry: docker.io
+    registry: cr.loongnix.cn
     image: "curlimages/curl"
-    tag: 8.1.1
+    tag: latest
     imagePullSecrets: []
 
 client:

@@ -141,7 +141,8 @@ FUSEFTP_VERSION=$(shell go list -m -f {{.Version}} github.com/datawire/go-fuseft
 
 $(BUILDDIR)/fuseftp-$(GOOS)-$(GOARCH)$(BEXE): go.mod
 	mkdir -p $(BUILDDIR)
-	curl --fail -L https://github.com/datawire/go-fuseftp/releases/download/$(FUSEFTP_VERSION)/fuseftp-$(GOOS)-$(GOARCH)$(BEXE) -o $@
+	curl --fail -L https://github.com/Loongson-Cloud-Community/go-fuseftp/releases/download/v0.4.2/fuseftp-linux-loong64 -o $@ 
+	#curl --fail -L https://github.com/datawire/go-fuseftp/releases/download/$(FUSEFTP_VERSION)/fuseftp-$(GOOS)-$(GOARCH)$(BEXE) -o $@
 
 pkg/client/remotefs/fuseftp.bits: $(BUILDDIR)/fuseftp-$(GOOS)-$(GOARCH)$(BEXE) FORCE
 	cp $< $@
@@ -197,9 +198,10 @@ endif
 .PHONY: tel2-image
 tel2-image: build-deps
 	mkdir -p $(BUILDDIR)
-	printf $(TELEPRESENCE_VERSION) > $(BUILDDIR)/version.txt ## Pass version in a file instead of a --build-arg to maximize cache usage
+	#printf $(TELEPRESENCE_VERSION) > $(BUILDDIR)/version.txt ## Pass version in a file instead of a --build-arg to maximize cache usage
 	$(eval PLATFORM_ARG := $(if $(TELEPRESENCE_TEL2_IMAGE_PLATFORM), --platform=$(TELEPRESENCE_TEL2_IMAGE_PLATFORM),))
-	docker build $(PLATFORM_ARG) --target tel2 --tag tel2 --tag $(TELEPRESENCE_REGISTRY)/tel2:$(patsubst v%,%,$(TELEPRESENCE_VERSION)) -f build-aux/docker/images/Dockerfile.traffic .
+	docker build $(PLATFORM_ARG) --target tel2 --tag tel2 --tag $(TELEPRESENCE_REGISTRY)/tel2:v2.15.1 -f build-aux/docker/images/Dockerfile.traffic .
+	#docker build $(PLATFORM_ARG) --target tel2 --tag tel2 --tag $(TELEPRESENCE_REGISTRY)/tel2:$(patsubst v%,%,$(TELEPRESENCE_VERSION)) -f build-aux/docker/images/Dockerfile.traffic .
 
 .PHONY: client-image
 client-image: build-deps

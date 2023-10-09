@@ -26,7 +26,8 @@ const (
 
 var testConfig = agentconfig.Sidecar{
 	Create:       false,
-	AgentImage:   "docker.io/datawire/tel2:2.5.4",
+	//AgentImage:   "docker.io/datawire/tel2:2.5.4",
+	AgentImage:   "cr.loongnix.cn/library/tel2:2.5.1",
 	AgentName:    "test-echo",
 	LogLevel:     "debug",
 	Namespace:    namespace,

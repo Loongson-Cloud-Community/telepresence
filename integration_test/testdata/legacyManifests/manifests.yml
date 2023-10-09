@@ -166,13 +166,13 @@ spec:
         - name: CLUSTER_ID
           value: 8672e7b3-2f32-4a4c-ba6f-a5aea4ebc189
         - name: TELEPRESENCE_REGISTRY
-          value: docker.io/datawire
+          value: cr.loongnix.cn/library
         - name: MANAGER_NAMESPACE
           valueFrom:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: docker.io/datawire/tel2:2.4.0
+        image: cr.loongnix.cn/library/tel2:2.15.1
         imagePullPolicy: IfNotPresent
         name: traffic-manager
         ports:
